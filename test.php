@@ -13,6 +13,12 @@ declare(strict_types=1);
  * 3. Verifies that Composer dependencies are installed
  * 4. Tests QR code generation using the Endroid QR Code library
  *
+ * The application consists of the following main components:
+ * - index.php: The main user interface with tabs for URL input and file upload
+ * - generate.php: Backend script that handles QR code generation and file uploads
+ * - assets/: Directory containing CSS, JS, fonts, and images for the UI
+ * - vendor/: Directory containing third-party libraries (Endroid QR Code, TCPDF)
+ *
  * Run this script from the command line to verify that your environment
  * is properly set up for the QR code generator application.
  */
@@ -119,6 +125,21 @@ echo "Open index.php in your web browser to start generating QR codes.\n";
  * The main application (index.php and generate.php) provides a web interface for users
  * to create QR codes with custom titles and download them as PDF files, as well as
  * upload files (PNG, JPG, JPEG, PDF, PPT, PPTX, DOC, DOCX) and get shareable links.
+ *
+ * QR Code Generation Process:
+ * 1. User enters a title and URL in the form
+ * 2. Client-side JavaScript validates the URL format
+ * 3. Server-side validation ensures required fields and valid URL format
+ * 4. QR code is generated using Endroid QR Code library and saved as a PNG file
+ * 5. PNG is embedded in a PDF document using TCPDF with Times New Roman font
+ * 6. PDF is sent to the user for download with a unique filename
+ *
+ * File Upload Process:
+ * 1. User enters a title and selects a file to upload
+ * 2. Server validates the file type against allowed formats
+ * 3. File is saved in a directory structure based on current date (year/month/day)
+ * 4. A unique filename is generated based on title, timestamp, and original filename
+ * 5. Server returns a shareable link to the uploaded file
  *
  * If all tests pass, your environment is correctly set up to run the application.
  */
