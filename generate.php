@@ -42,11 +42,11 @@ try {
 
     // 2) Convert & register TTF (once)
     $regularFont = \TCPDF_FONTS::addTTFfont(
-        __DIR__.'/fonts/Times-New-Roman.ttf',
+        __DIR__ . '/assets/fonts/Times-New-Roman.ttf',
         'TrueTypeUnicode','',96
     );
     $boldFont = \TCPDF_FONTS::addTTFfont(
-        __DIR__.'/fonts/Times-New-Roman-Bold.ttf',
+        __DIR__ . '/assets/fonts/Times-New-Roman-Bold.ttf',
         'TrueTypeUnicode','',96
     );
 
