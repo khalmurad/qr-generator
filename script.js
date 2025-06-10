@@ -5,21 +5,21 @@ document.addEventListener('DOMContentLoaded', function() {
     // Add submit event listener
     if (form) {
         form.addEventListener('submit', function(event) {
+            // Prevent default form submission (no page refresh)
+            event.preventDefault();
+
             // Get form inputs
             const title = document.getElementById('title').value.trim();
             const link = document.getElementById('link').value.trim();
-            const pdfFile = document.getElementById('pdfFile').files[0];
 
             // Validate title
             if (title === '') {
-                event.preventDefault();
                 alert('Please enter a title for your QR code.');
                 return;
             }
 
             // Validate link
             if (link === '') {
-                event.preventDefault();
                 alert('Please enter a link for your QR code.');
                 return;
             }
@@ -28,40 +28,21 @@ document.addEventListener('DOMContentLoaded', function() {
             try {
                 new URL(link);
             } catch (e) {
-                event.preventDefault();
                 alert('Please enter a valid URL (e.g., https://example.com)');
                 return;
             }
 
-            // Validate PDF file if one was selected
-            if (pdfFile) {
-                // Check file type
-                if (pdfFile.type !== 'application/pdf') {
-                    event.preventDefault();
-                    alert('The selected file is not a PDF. Please select a valid PDF file.');
-                    return;
-                }
-
-                // Check file size (max 10MB)
-                const maxSize = 10 * 1024 * 1024; // 10MB in bytes
-                if (pdfFile.size > maxSize) {
-                    event.preventDefault();
-                    alert('The selected PDF file is too large. Please select a file smaller than 10MB.');
-                    return;
-                }
-            }
-
-            // If we get here, form is valid and will submit
+            // If we get here, form is valid
             // Show loading indicator with spinner
             const button = form.querySelector('button[type="submit"]');
+            const originalButtonText = button.textContent;
             if (button) {
-                button.textContent = 'Generating...';
+                button.textContent = 'В процессе...';
                 button.disabled = true;
                 button.classList.add('spinner');
             }
 
-            // Set up page refresh after download
-            // Create a hidden iframe to handle the form submission
+            // Create a hidden iframe to handle the file download
             const iframe = document.createElement('iframe');
             iframe.style.display = 'none';
             iframe.name = 'download_frame';
@@ -70,19 +51,48 @@ document.addEventListener('DOMContentLoaded', function() {
             // Set the form's target to the iframe
             form.target = 'download_frame';
 
-            // Set up a timer to check if the form submission is complete
-            // This is more reliable than listening for the iframe's load event
-            setTimeout(function() {
-                // Refresh the page after a delay to ensure the download has started
-                window.location.reload();
-            }, 3000); // 3 seconds should be enough for most PDF generations
+            // We'll use the iframe approach for handling file downloads
+            // Set up a timeout to handle cases where the iframe might not load properly
+            // const downloadTimeout = setTimeout(function() {
+            //     if (button) {
+            //         button.textContent = originalButtonText;
+            //         button.disabled = false;
+            //         button.classList.remove('spinner');
+            //     }
+            //     alert('The download may have failed. Please try again.');
+            // }, 30000); // 30 seconds timeout
+
+            // Set up a shorter timeout to reset the button state after a reasonable time
+            // This assumes the download has started successfully
+            const successTimeout = setTimeout(function() {
+                // clearTimeout(downloadTimeout); // Clear the error timeout
+                if (button) {
+                    button.textContent = originalButtonText;
+                    button.disabled = false;
+                    button.classList.remove('spinner');
+                }
+            }, 5000); // 5 seconds should be enough for most downloads to start
+
+            // Submit the form normally to trigger the file download
+            form.submit();
+
+            // Set up a listener to detect when the download is complete
+            // Note: This may not always fire reliably for downloads
+            iframe.onload = function() {
+                // clearTimeout(downloadTimeout);
+                clearTimeout(successTimeout);
+                if (button) {
+                    button.textContent = originalButtonText;
+                    button.disabled = false;
+                    button.classList.remove('spinner');
+                }
+            };
         });
     }
 
     // Add input event listeners for real-time validation
     const titleInput = document.getElementById('title');
     const linkInput = document.getElementById('link');
-    const pdfFileInput = document.getElementById('pdfFile');
 
     if (titleInput) {
         titleInput.addEventListener('input', function() {
@@ -99,29 +109,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             } catch (e) {
                 this.setCustomValidity('Please enter a valid URL');
-            }
-        });
-    }
-
-    if (pdfFileInput) {
-        pdfFileInput.addEventListener('change', function() {
-            this.setCustomValidity('');
-
-            if (this.files.length > 0) {
-                const file = this.files[0];
-
-                // Check file type
-                if (file.type !== 'application/pdf') {
-                    this.setCustomValidity('The selected file is not a PDF. Please select a valid PDF file.');
-                    return;
-                }
-
-                // Check file size (max 10MB)
-                const maxSize = 10 * 1024 * 1024; // 10MB in bytes
-                if (file.size > maxSize) {
-                    this.setCustomValidity('The selected PDF file is too large. Please select a file smaller than 10MB.');
-                    return;
-                }
             }
         });
     }

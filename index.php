@@ -8,18 +8,18 @@
 </head>
 <body>
     <div class="container">
-        <h1>QR Code Generator</h1>
+        <h1>Генератор QR-кода</h1>
         <form id="qrForm" action="generate.php" method="post" enctype="multipart/form-data">
             <div class="form-group">
-                <label for="title">QR Code Title:</label>
+                <label for="title">Название QR-кода:</label>
                 <input type="text" id="title" name="title" required>
             </div>
             <div class="form-group">
-                <label for="link">QR Code Link:</label>
+                <label for="link">Ссылка на QR-код:</label>
                 <input type="url" id="link" name="link" required>
             </div>
             <div class="form-group">
-                <button type="submit">Generate QR Code PDF</button>
+                <button type="submit">Сгенерировать QR-код</button>
             </div>
         </form>
     </div>
