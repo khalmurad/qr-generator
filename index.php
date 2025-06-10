@@ -4,6 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Генератор QR-кода</title>
+
+    <!-- Primary Meta Tags -->
+    <meta name="title" content="Генератор QR-кода">
+    <meta name="description" content="Бесплатный генератор QR-кодов для создания QR-кодов из URL-адресов и сохранения их в формате PDF с пользовательскими заголовками.">
+    <meta name="keywords" content="QR код, генератор QR кода, PDF, URL в QR код, создать QR код, бесплатный QR код">
+    <meta name="author" content="QR Code Generator">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="Russian">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://qr.xservice.uz/">
+    <meta property="og:title" content="Генератор QR-кода">
+    <meta property="og:description" content="Бесплатный генератор QR-кодов для создания QR-кодов из URL-адресов и сохранения их в формате PDF с пользовательскими заголовками.">
+    <meta property="og:image" content="assets/img/qr-generator-preview.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://qr.xservice.uz/">
+    <meta property="twitter:title" content="Генератор QR-кода">
+    <meta property="twitter:description" content="Бесплатный генератор QR-кодов для создания QR-кодов из URL-адресов и сохранения их в формате PDF с пользовательскими заголовками.">
+    <meta property="twitter:image" content="assets/img/qr-generator-preview.png">
+
+    <!-- Canonical URL -->
+    <meta rel="canonical" href="https://qr.xservice.uz/">
+
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="apple-touch-icon" sizes="57x57" href="assets/img/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="assets/img/apple-icon-60x60.png">
