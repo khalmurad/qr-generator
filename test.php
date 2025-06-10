@@ -7,7 +7,9 @@ declare(strict_types=1);
  * This script tests the functionality of the QR code generator application.
  * It performs the following checks:
  * 1. Verifies PHP version compatibility (requires PHP 8.3+)
- * 2. Checks if required directories exist and creates them if needed
+ * 2. Checks if required directories exist and creates them if needed:
+ *    - qrcodes directory (for QR code generation)
+ *    - uploads directory (for file upload functionality)
  * 3. Verifies that Composer dependencies are installed
  * 4. Tests QR code generation using the Endroid QR Code library
  *
@@ -30,6 +32,8 @@ if (PHP_VERSION_ID < 80300) {
 
 // Check if required directories exist
 echo "\nChecking required directories...\n";
+
+// Check qrcodes directory
 $qrDir = __DIR__ . '/qrcodes';
 if (!is_dir($qrDir)) {
     echo "Creating qrcodes directory...\n";
@@ -41,6 +45,20 @@ if (!is_dir($qrDir)) {
     }
 } else {
     echo "SUCCESS: qrcodes directory exists.\n";
+}
+
+// Check uploads directory
+$uploadsDir = __DIR__ . '/uploads';
+if (!is_dir($uploadsDir)) {
+    echo "Creating uploads directory...\n";
+    if (mkdir($uploadsDir, 0755, true)) {
+        echo "SUCCESS: uploads directory created.\n";
+    } else {
+        echo "ERROR: Failed to create uploads directory.\n";
+        exit(1);
+    }
+} else {
+    echo "SUCCESS: uploads directory exists.\n";
 }
 
 // Check if Composer dependencies are installed
@@ -99,7 +117,8 @@ echo "Open index.php in your web browser to start generating QR codes.\n";
 /**
  * Note: This test script verifies the basic functionality required by the QR code generator.
  * The main application (index.php and generate.php) provides a web interface for users
- * to create QR codes with custom titles and download them as PDF files.
+ * to create QR codes with custom titles and download them as PDF files, as well as
+ * upload files (PNG, JPG, JPEG, PDF, PPT, PPTX, DOC, DOCX) and get shareable links.
  *
  * If all tests pass, your environment is correctly set up to run the application.
  */

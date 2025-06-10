@@ -9,6 +9,7 @@ This project is a PHP-based QR code generator that allows users to create QR cod
 ## Features
 
 - Generate QR codes from URLs
+- Upload files (PNG, JPG, JPEG, PDF, PPT, PPTX, DOC, DOCX) and get a shareable link
 - Add a title to your QR code
 - Download the result as a PDF in A4 format
 - Client-side and server-side validation
@@ -21,7 +22,7 @@ This project is a PHP-based QR code generator that allows users to create QR cod
 - PHP mbstring extension
 - Composer
 - Web server (Apache, Nginx, etc.)
-- Write permissions for the `qrcodes` directory
+- Write permissions for the `qrcodes` and `uploads` directories
 
 ## Installation
 
@@ -42,11 +43,11 @@ This project is a PHP-based QR code generator that allows users to create QR cod
 
    **Important**: The application will not work without installing dependencies. If you see an error about missing vendor/autoload.php, it means you need to run this command.
 
-4. Make sure the `qrcodes` directory is writable by the web server:
+4. Make sure the `qrcodes` and `uploads` directories are writable by the web server:
    ```
-   sudo mkdir qrcodes
-   sudo chown www-data:www-data /var/www/qr-generator/
-   sudo chmod 755 qrcodes
+   sudo mkdir qrcodes uploads
+   sudo chown www-data:www-data qrcodes uploads
+   sudo chmod 755 qrcodes uploads
    ```
 
 5. Make sure the `fonts` directory exists and contains the required font files:
@@ -69,11 +70,23 @@ This project is a PHP-based QR code generator that allows users to create QR cod
 
 ## Usage
 
+### For QR Code Generation:
+
 1. Open the application in your web browser.
 2. Enter a title for your QR code in the "Название QR-кода" field.
-3. Enter the URL you want to encode in the QR code in the "Ссылка на QR-код" field.
-4. Click "Сгенерировать QR-код" to create and download the PDF.
-5. The PDF will be automatically downloaded with the QR code centered on an A4 page.
+3. Select the "Ссылка" (Link) tab.
+4. Enter the URL you want to encode in the QR code in the "Ссылка на QR-код" field.
+5. Click "Сгенерировать QR-код" to create and download the PDF.
+6. The PDF will be automatically downloaded with the QR code centered on an A4 page.
+
+### For File Upload:
+
+1. Open the application in your web browser.
+2. Enter a title for your file in the "Название QR-кода" field.
+3. Select the "Файл" (File) tab.
+4. Click on the file upload field and select a file (supported formats: PNG, JPG, JPEG, PDF, PPT, PPTX, DOC, DOCX).
+5. Click "Сгенерировать QR-код" to upload the file.
+6. After successful upload, you'll receive a shareable link to the file.
 
 ## Testing
 
@@ -93,6 +106,8 @@ Run this script after installation to ensure everything is working correctly.
 
 ## How It Works
 
+### QR Code Generation:
+
 1. The user enters a title and URL in the form.
 2. Client-side JavaScript validates the input in real-time, ensuring a valid URL format.
 3. When the form is submitted, JavaScript prevents the default form submission and handles it via a hidden iframe for better download handling.
@@ -101,6 +116,16 @@ Run this script after installation to ensure everything is working correctly.
 6. The QR code is embedded in a PDF document using TCPDF, along with the title in Times New Roman font.
 7. The PDF is sent to the user for download with a unique filename based on the timestamp.
 8. Temporary QR code image files are cleaned up after the PDF is generated.
+
+### File Upload:
+
+1. The user enters a title and selects a file to upload.
+2. When the form is submitted, the file is sent to the server.
+3. The server validates the file type, ensuring it's one of the supported formats (PNG, JPG, JPEG, PDF, PPT, PPTX, DOC, DOCX).
+4. The file is saved to a directory structure based on the current date (year/month/day).
+5. A unique filename is generated based on the title, timestamp, and original filename.
+6. The server returns a shareable link to the uploaded file.
+7. The link is displayed to the user for copying and sharing.
 
 ## License
 
