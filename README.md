@@ -2,6 +2,10 @@
 
 A simple web application that generates QR codes from URLs and outputs them as PDF files in A4 format. The application features both client-side and server-side validation, ensuring that only valid URLs are processed.
 
+## Project Overview
+
+This project is a PHP-based QR code generator that allows users to create QR codes from URLs and download them as PDF files. The application uses the Endroid QR Code library for generating QR codes and TCPDF for creating PDF documents with embedded QR codes and custom fonts.
+
 ## Features
 
 - Generate QR codes from URLs
@@ -69,6 +73,22 @@ A simple web application that generates QR codes from URLs and outputs them as P
 3. Enter the URL you want to encode in the QR code in the "Ссылка на QR-код" field.
 4. Click "Сгенерировать QR-код" to create and download the PDF.
 5. The PDF will be automatically downloaded with the QR code centered on an A4 page.
+
+## Testing
+
+The project includes a test script (`test.php`) that verifies your environment is properly set up:
+
+```
+php test.php
+```
+
+This script checks:
+- PHP version compatibility
+- Required directories existence
+- Composer dependencies installation
+- QR code generation functionality
+
+Run this script after installation to ensure everything is working correctly.
 
 ## How It Works
 
