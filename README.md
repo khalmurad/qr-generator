@@ -44,8 +44,9 @@ This project is a PHP-based QR code generator that allows users to create QR cod
 
 4. Make sure the `qrcodes` directory is writable by the web server:
    ```
-   mkdir qrcodes
-   chmod 755 qrcodes
+   sudo mkdir qrcodes
+   sudo chown www-data:www-data /var/www/qr-generator/
+   sudo chmod 755 qrcodes
    ```
 
 5. Make sure the `fonts` directory exists and contains the required font files:
@@ -54,7 +55,7 @@ This project is a PHP-based QR code generator that allows users to create QR cod
    ls -la fonts
 
    # If not, create it
-   mkdir -p fonts
+   sudo mkdir -p fonts
    ```
 
 6. Configure your web server to serve the application. A sample Nginx configuration file (`nginx.conf`) is included in the repository. You can use it as a reference:
@@ -109,4 +110,3 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 - [TCPDF](https://github.com/tecnickcom/TCPDF) for PDF generation with font embedding
 - [endroid/qr-code](https://github.com/endroid/qr-code) for QR code generation
-- [setasign/fpdf](https://github.com/setasign/fpdf) as a dependency for PDF functionality
