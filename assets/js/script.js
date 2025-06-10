@@ -43,11 +43,42 @@ document.addEventListener('DOMContentLoaded', function() {
     // Check for success parameter in URL
     const urlParams = new URLSearchParams(window.location.search);
     const fileUrl = urlParams.get('file_url');
+    const qrPdfUrl = urlParams.get('qr_pdf');
+
     if (fileUrl) {
         const successAlert = document.getElementById('uploadSuccess');
         const fileLink = document.getElementById('uploadedFileLink');
         fileLink.href = fileUrl;
         fileLink.textContent = fileUrl;
+
+        // If we have a QR code PDF URL, add a download link for it
+        if (qrPdfUrl) {
+            // Check if QR download link already exists
+            let qrDownloadLink = document.getElementById('qrDownloadLink');
+            if (!qrDownloadLink) {
+                // Create a new paragraph for the QR code download link
+                const qrLinkParagraph = document.createElement('p');
+                qrLinkParagraph.style.marginTop = '10px';
+
+                // Create the download link
+                qrDownloadLink = document.createElement('a');
+                qrDownloadLink.id = 'qrDownloadLink';
+                qrDownloadLink.href = qrPdfUrl;
+                qrDownloadLink.textContent = 'Скачать QR-код для этого файла';
+                qrDownloadLink.className = 'qr-download-btn';
+                qrDownloadLink.setAttribute('download', '');
+
+                // Add the link to the paragraph
+                qrLinkParagraph.appendChild(qrDownloadLink);
+
+                // Add the paragraph to the success alert
+                successAlert.appendChild(qrLinkParagraph);
+            } else {
+                // Update existing link
+                qrDownloadLink.href = qrPdfUrl;
+            }
+        }
+
         successAlert.style.display = 'block';
 
         // Remove the parameters from URL without refreshing

@@ -174,6 +174,23 @@ button:hover {
     text-decoration: underline;
 }
 
+/* QR Code download button */
+.qr-download-btn {
+    display: inline-block;
+    background-color: #28a745;
+    color: white !important;
+    text-decoration: none !important;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-weight: bold;
+    margin-top: 10px;
+    transition: background-color 0.3s;
+}
+
+.qr-download-btn:hover {
+    background-color: #218838;
+}
+
 /* Error styles */
 .error-message {
     color: #dc3545;

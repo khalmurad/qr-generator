@@ -74,9 +74,66 @@ if (!empty($_FILES['file']['name'])) {
     $absoluteUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") .
                   "://$_SERVER[HTTP_HOST]" . dirname($_SERVER['REQUEST_URI']) . "$fileUrl";
 
-    // Redirect back to form with success message
-    header("Location: index.php?file_url=" . urlencode($absoluteUrl));
-    exit;
+    // Generate QR code for the file URL
+    $qrDir  = __DIR__ . '/qrcodes';
+    $qrFile = $qrDir . '/' . md5($title . $absoluteUrl . time()) . '.png';
+    if (!is_dir($qrDir)) { mkdir($qrDir, 0755, true); }
+
+    // Generate QR PNG
+    $qr = QrCode::create($absoluteUrl)->setSize(400)->setMargin(10);
+    file_put_contents($qrFile, (new PngWriter())->write($qr)->getString());
+
+    // Build PDF
+    try {
+        // 1) Instantiate PDF
+        $pdf = new \TCPDF('P','mm','A4',true,'UTF-8',false);
+        $pdf->setPrintHeader(false);
+        $pdf->setPrintFooter(false);
+        $pdf->SetMargins(15,27,15);
+        $pdf->SetAutoPageBreak(true,10);
+
+        // 2) Convert & register TTF (once)
+        $regularFont = \TCPDF_FONTS::addTTFfont(
+            __DIR__ . '/assets/fonts/Times-New-Roman.ttf',
+            'TrueTypeUnicode','',96
+        );
+        $boldFont = \TCPDF_FONTS::addTTFfont(
+            __DIR__ . '/assets/fonts/Times-New-Roman-Bold.ttf',
+            'TrueTypeUnicode','',96
+        );
+
+        // 3) Draw page
+        $pdf->AddPage();
+
+        // 4) Title in TNR Bold
+        $pdf->SetFont($boldFont,'B',16);
+        $pdf->MultiCell(0, 8, $title, 0, 'C', 0, 1, '', '', true);
+        $pdf->Ln(20);
+
+        // 5) QR code enlarged
+        $imgW  = 150;
+        $xPos  = ($pdf->GetPageWidth() - $imgW) / 2;
+        $yPos  = $pdf->GetY();
+        $pdf->Image($qrFile, $xPos, $yPos, $imgW, $imgW, 'PNG');
+
+        // 6) Output
+        $pdfFileName = 'QR_Code_' . time() . '.pdf';
+        $pdfFilePath = $qrDir . '/' . $pdfFileName;
+        $pdf->Output($pdfFilePath, 'F');
+
+        // Clean up QR image file
+        unlink($qrFile);
+
+        // Redirect back to form with success message and QR code PDF URL
+        $pdfUrl = "qrcodes/$pdfFileName";
+        $absolutePdfUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") .
+                         "://$_SERVER[HTTP_HOST]" . dirname($_SERVER['REQUEST_URI']) . "$pdfUrl";
+
+        header("Location: index.php?file_url=" . urlencode($absoluteUrl) . "&qr_pdf=" . urlencode($absolutePdfUrl));
+        exit;
+    } catch (Exception $e) {
+        die('PDF error: ' . $e->getMessage());
+    }
 } else {
     // Original link handling
     $link = $_POST['link'] ?? '';
