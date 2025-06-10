@@ -4,6 +4,7 @@ composer.lock
 
 # Generated QR codes
 /qrcodes/
+/uploads/
 
 # IDE files
 .idea/

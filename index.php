@@ -52,15 +52,43 @@
 <body>
     <div class="container">
         <h1>Генератор QR-кода</h1>
+        <div id="uploadSuccess" class="alert-success" style="display: none; padding: 15px; margin-bottom: 20px; border: 1px solid #d6e9c6; border-radius: 4px; color: #3c763d; background-color: #dff0d8;">
+            Файл успешно загружен.
+            <br>
+            Ссылка: <a id="uploadedFileLink" href="#" target="_blank"></a>
+        </div>
         <form id="qrForm" action="generate.php" method="post" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="title">Название QR-кода:</label>
                 <input type="text" id="title" name="title" required>
             </div>
-            <div class="form-group">
-                <label for="link">Ссылка на QR-код:</label>
-                <input type="url" id="link" name="link" required>
+
+            <!-- Tab navigation -->
+            <div class="tab-container">
+                <div class="tab-nav">
+                    <button type="button" class="tab-btn active" data-tab="link-tab">Ссылка</button>
+                    <button type="button" class="tab-btn" data-tab="file-tab">Файл</button>
+                </div>
+
+                <!-- Tab content -->
+                <div class="tab-content">
+                    <div id="link-tab" class="tab-pane active">
+                        <div class="form-group">
+                            <label for="link">Ссылка на QR-код:</label>
+                            <input type="url" id="link" name="link" required>
+                        </div>
+                    </div>
+
+                    <div id="file-tab" class="tab-pane">
+                        <div class="form-group">
+                            <label for="file">Загрузить файл:</label>
+                            <input type="file" id="file" name="file" accept=".png,.jpg,.jpeg,.pdf,.ppt,.pptx,.doc,.docx">
+                            <small>Допустимые форматы: PNG, JPG, JPEG, PDF, PPT, PPTX, DOC, DOCX</small>
+                        </div>
+                    </div>
+                </div>
             </div>
+
             <div class="form-group">
                 <button type="submit">Сгенерировать QR-код</button>
             </div>

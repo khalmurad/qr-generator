@@ -109,6 +109,87 @@ button:hover {
     vertical-align: middle;
 }
 
+/* Tab styles */
+.tab-container {
+    margin-bottom: 20px;
+}
+
+.tab-nav {
+    display: flex;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 15px;
+}
+
+.tab-btn {
+    background-color: #f5f5f5;
+    color: #333;
+    border: 1px solid #ddd;
+    border-bottom: none;
+    padding: 10px 15px;
+    margin-right: 5px;
+    border-radius: 4px 4px 0 0;
+    cursor: pointer;
+    width: auto;
+    transition: background-color 0.3s;
+}
+
+.tab-btn:hover {
+    background-color: #e9e9e9;
+}
+
+.tab-btn.active {
+    background-color: #fff;
+    color: #3498db;
+    border-bottom: 1px solid #fff;
+    margin-bottom: -1px;
+}
+
+.tab-content {
+    border: 1px solid #ddd;
+    border-top: none;
+    padding: 15px;
+    border-radius: 0 0 4px 4px;
+}
+
+.tab-pane {
+    display: none;
+}
+
+.tab-pane.active {
+    display: block;
+}
+
+/* Alert styles */
+.alert-success {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid #d6e9c6;
+    border-radius: 4px;
+    color: #3c763d;
+    background-color: #dff0d8;
+}
+
+.alert-success a {
+    color: #2b542c;
+    text-decoration: underline;
+}
+
+/* Error styles */
+.error-message {
+    color: #dc3545;
+    font-size: 14px;
+    margin-top: 5px;
+    display: block;
+}
+
+.input-error {
+    border-color: #dc3545 !important;
+}
+
+.input-error:focus {
+    box-shadow: 0 0 5px rgba(220, 53, 69, 0.5) !important;
+}
+
 /* Responsive adjustments */
 @media (max-width: 600px) {
     .container {
