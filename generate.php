@@ -72,7 +72,7 @@ if (!empty($_FILES['file']['name'])) {
     // Generate file URL
     $fileUrl = "uploads/$year/$month/$day/$uniqueFileName";
     $absoluteUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") .
-                  "://$_SERVER[HTTP_HOST]" . dirname($_SERVER['REQUEST_URI']) . "/$fileUrl";
+                  "://$_SERVER[HTTP_HOST]" . dirname($_SERVER['REQUEST_URI']) . "$fileUrl";
 
     // Redirect back to form with success message
     header("Location: index.php?file_url=" . urlencode($absoluteUrl));

@@ -31,6 +31,7 @@
     <meta rel="canonical" href="https://qr.xservice.uz/">
 
     <link rel="stylesheet" href="assets/css/style.css">
+<!--    <link rel="icon" href="assets/img/favicon.ico"/>-->
     <link rel="apple-touch-icon" sizes="57x57" href="assets/img/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="assets/img/apple-icon-60x60.png">
     <link rel="apple-touch-icon" sizes="72x72" href="assets/img/apple-icon-72x72.png">
