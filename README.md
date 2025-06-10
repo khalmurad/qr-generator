@@ -1,137 +1,140 @@
-# QR Code Generator
+# Генератор QR-кодов
 
-A simple web application that generates QR codes from URLs and outputs them as PDF files in A4 format. The application features both client-side and server-side validation, ensuring that only valid URLs are processed.
+Простое веб-приложение, которое генерирует QR-коды по URL и выводит их в виде PDF-файлов формата A4. В приложении реализована валидация на стороне клиента и на стороне сервера, что гарантирует обработку только корректных URL.
 
-## Project Overview
+## Обзор проекта
 
-This project is a PHP-based QR code generator that allows users to create QR codes from URLs and download them as PDF files. The application uses the Endroid QR Code library for generating QR codes and TCPDF for creating PDF documents with embedded QR codes and custom fonts.
+Этот проект представляет собой PHP-приложение для генерации QR-кодов, позволяющее пользователям создавать QR-коды по URL и скачивать их в виде PDF-файлов. Для генерации QR-кодов используется библиотека Endroid QR Code, а для создания PDF-документов с встраиванием QR-кодов и пользовательских шрифтов — TCPDF.
 
-## Features
+## Возможности
 
-- Generate QR codes from URLs
-- Upload files (PNG, JPG, JPEG, PDF, PPT, PPTX, DOC, DOCX) and get a shareable link
-- Add a title to your QR code
-- Download the result as a PDF in A4 format
-- Client-side and server-side validation
-- Responsive design
-- Custom Times New Roman font embedding in PDFs
+* Генерация QR-кодов из URL
+* Загрузка файлов (PNG, JPG, JPEG, PDF, PPT, PPTX, DOC, DOCX) и получение общей ссылки
+* Добавление заголовка к QR-коду
+* Скачивание результата в формате PDF A4
+* Валидация на стороне клиента и на стороне сервера
+* Адаптивный дизайн
+* Встраивание шрифта Times New Roman в PDF
 
-## Requirements
+## Требования
 
-- PHP 8.3 or higher
-- PHP mbstring extension
-- Composer
-- Web server (Apache, Nginx, etc.)
-- Write permissions for the `qrcodes` and `uploads` directories
+* PHP версии 8.3 или выше
+* Расширение PHP mbstring
+* Composer
+* Веб-сервер (Apache, Nginx и т.д.)
+* Права на запись в директориях `qrcodes` и `uploads`
 
-## Installation
+## Установка
 
-1. Clone this repository to your web server directory:
-   ```
+1. Клонируйте этот репозиторий в директорию вашего веб-сервера:
+
+   ```bash
    git clone https://github.com/yourusername/qr-generator.git
    ```
 
-2. Navigate to the project directory:
-   ```
+2. Перейдите в каталог проекта:
+
+   ```bash
    cd qr-generator
    ```
 
-3. Install dependencies using Composer (this step is required):
-   ```
+3. Установите зависимости через Composer (обязательно):
+
+   ```bash
    composer install
    ```
 
-   **Important**: The application will not work without installing dependencies. If you see an error about missing vendor/autoload.php, it means you need to run this command.
+   **Важно**: приложение не будет работать без установленных зависимостей. Если вы видите ошибку об отсутствии `vendor/autoload.php`, значит нужно выполнить эту команду.
 
-4. Make sure the `qrcodes` and `uploads` directories are writable by the web server:
-   ```
+4. Убедитесь, что директории `qrcodes` и `uploads` доступны для записи веб-серверу:
+
+   ```bash
    sudo mkdir qrcodes uploads
    sudo chown www-data:www-data qrcodes uploads
    sudo chmod 755 qrcodes uploads
    ```
 
-5. Make sure the `fonts` directory exists and contains the required font files:
-   ```
-   # Check if fonts directory exists
-   ls -la fonts
+5. Убедитесь, что существует директория `fonts` и в ней находятся необходимые файлы шрифтов:
 
-   # If not, create it
-   sudo mkdir -p fonts
+   ```bash
+   ls -la fonts       # Проверка наличия директории
+   sudo mkdir -p fonts  # Создание, если отсутствует
    ```
 
-6. Configure your web server to serve the application. A sample Nginx configuration file (`nginx.conf`) is included in the repository. You can use it as a reference:
-   ```
-   # For Nginx
+6. Настройте веб-сервер для обслуживания приложения. В репозитории есть пример конфигурации Nginx (`nginx.conf`), который можно использовать как шаблон:
+
+   ```bash
    sudo cp nginx.conf /etc/nginx/sites-available/qr-generator.conf
    sudo ln -s /etc/nginx/sites-available/qr-generator.conf /etc/nginx/sites-enabled/
    sudo nginx -t
    sudo nginx -s reload
    ```
 
-## Usage
+## Использование
 
-### For QR Code Generation:
+### Для генерации QR-кода
 
-1. Open the application in your web browser.
-2. Enter a title for your QR code in the "Название QR-кода" field.
-3. Select the "Ссылка" (Link) tab.
-4. Enter the URL you want to encode in the QR code in the "Ссылка на QR-код" field.
-5. Click "Сгенерировать QR-код" to create and download the PDF.
-6. The PDF will be automatically downloaded with the QR code centered on an A4 page.
+1. Откройте приложение в браузере.
+2. В поле «Название QR-кода» введите заголовок.
+3. Перейдите на вкладку «Ссылка».
+4. В поле «Ссылка на QR-код» введите нужный URL.
+5. Нажмите «Сгенерировать QR-код» для создания и скачивания PDF.
+6. PDF автоматически загрузится с QR-кодом, центрированным на странице A4.
 
-### For File Upload:
+### Для загрузки файла
 
-1. Open the application in your web browser.
-2. Enter a title for your file in the "Название QR-кода" field.
-3. Select the "Файл" (File) tab.
-4. Click on the file upload field and select a file (supported formats: PNG, JPG, JPEG, PDF, PPT, PPTX, DOC, DOCX).
-5. Click "Сгенерировать QR-код" to upload the file.
-6. After successful upload, you'll receive a shareable link to the file.
+1. Откройте приложение в браузере.
+2. В поле «Название QR-кода» введите заголовок.
+3. Перейдите на вкладку «Файл».
+4. Нажмите на область загрузки и выберите файл (поддерживаемые форматы: PNG, JPG, JPEG, PDF, PPT, PPTX, DOC, DOCX).
+5. Нажмите «Сгенерировать QR-код» для загрузки файла.
+6. После успешной загрузки вы получите общедоступную ссылку на файл.
 
-## Testing
+## Тестирование
 
-The project includes a test script (`test.php`) that verifies your environment is properly set up:
+В проекте есть скрипт `test.php`, который проверяет правильность настройки окружения:
 
-```
+```bash
 php test.php
 ```
 
-This script checks:
-- PHP version compatibility
-- Required directories existence
-- Composer dependencies installation
-- QR code generation functionality
+Скрипт проверяет:
 
-Run this script after installation to ensure everything is working correctly.
+* Совместимость версии PHP
+* Наличие необходимых директорий
+* Установку зависимостей Composer
+* Функциональность генерации QR-кода
 
-## How It Works
+Запустите его после установки, чтобы убедиться, что всё работает корректно.
 
-### QR Code Generation:
+## Принцип работы
 
-1. The user enters a title and URL in the form.
-2. Client-side JavaScript validates the input in real-time, ensuring a valid URL format.
-3. When the form is submitted, JavaScript prevents the default form submission and handles it via a hidden iframe for better download handling.
-4. The server validates the input again, checking for required fields and valid URL format.
-5. A QR code is generated using the endroid/qr-code library and saved as a temporary PNG file.
-6. The QR code is embedded in a PDF document using TCPDF, along with the title in Times New Roman font.
-7. The PDF is sent to the user for download with a unique filename based on the timestamp.
-8. Temporary QR code image files are cleaned up after the PDF is generated.
+### Генерация QR-кода
 
-### File Upload:
+1. Пользователь вводит заголовок и URL в форму.
+2. JavaScript на стороне клиента в реальном времени проверяет корректность URL.
+3. При отправке формы JavaScript предотвращает стандартную отправку и обрабатывает её через скрытый iframe для удобства скачивания.
+4. На сервере повторно проверяются данные: обязательные поля и формат URL.
+5. С помощью библиотеки endroid/qr-code генерируется QR-код и сохраняется временный PNG-файл.
+6. QR-код вставляется в PDF-документ при помощи TCPDF, заголовок выводится шрифтом Times New Roman.
+7. PDF отправляется пользователю для скачивания с уникальным именем на основе метки времени.
+8. Временные PNG-файлы удаляются после генерации PDF.
 
-1. The user enters a title and selects a file to upload.
-2. When the form is submitted, the file is sent to the server.
-3. The server validates the file type, ensuring it's one of the supported formats (PNG, JPG, JPEG, PDF, PPT, PPTX, DOC, DOCX).
-4. The file is saved to a directory structure based on the current date (year/month/day).
-5. A unique filename is generated based on the title, timestamp, and original filename.
-6. The server returns a shareable link to the uploaded file.
-7. The link is displayed to the user for copying and sharing.
+### Загрузка файла
 
-## License
+1. Пользователь вводит заголовок и выбирает файл.
+2. При отправке формы файл передаётся на сервер.
+3. Сервер проверяет тип файла на соответствие поддерживаемым форматам.
+4. Файл сохраняется в структуре директорий по дате (год/месяц/день).
+5. Формируется уникальное имя на основе заголовка, метки времени и оригинального имени файла.
+6. Сервер возвращает общедоступную ссылку на загруженный файл.
+7. Ссылка отображается пользователю для копирования и дальнейшего использования.
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+## Лицензия
 
-## Acknowledgments
+Проект распространяется под лицензией MIT — подробности в файле LICENSE.
 
-- [TCPDF](https://github.com/tecnickcom/TCPDF) for PDF generation with font embedding
-- [endroid/qr-code](https://github.com/endroid/qr-code) for QR code generation
+## Благодарности
+
+* [TCPDF](https://github.com/tecnickcom/TCPDF) — за генерацию PDF с встраиванием шрифтов
+* [endroid/qr-code](https://github.com/endroid/qr-code) — за генерацию QR-кодов
